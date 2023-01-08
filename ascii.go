@@ -88,9 +88,9 @@ func main() {
 		pixels[y] = make([]RGBA, width)
 		for x := 0; x < width; x++ {
 			r, g, b, a := im.At(x, y).RGBA()
-			pixels[y] = append(pixels[y], RGBA{
+			pixels[y][x] = RGBA{
 				R: r, G: g, B: b, A: a,
-			})
+			}
 		}
 	}
 	//successPrinter.Println("succesfully generated pixel array...") // hooray!
