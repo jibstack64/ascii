@@ -19,4 +19,4 @@ Syntax: `./ascii <--in> photo.png [--out] out.txt [--scale] 0.5 [--stretch] 0.5 
 - `--print` - Prints the result to the console once finished.
 
 > ### Example
-> 
+> ![screenshot-2023-01-08-18:24:33](https://user-images.githubusercontent.com/107510599/211212584-6008ef34-bb5c-467e-ad0b-eaca82990e9d.png)
