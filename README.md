@@ -17,6 +17,7 @@ Syntax: `./ascii <--in> photo.png [--out] out.txt [--scale] 0.5 [--stretch] 0.5 
 - `--scale <number>` - Scales the result, making it more viable to be printed in a console. Must be above `0` (e.g. `0.5` would halve the size of the result). Defaults to `0.5`.
 - `--stretch <integer>` - Stretches the result horizontally. This is useful for larger images. Must be above `0`. Defaults to `1`.
 - `--print` - Prints the result to the console once finished.
+- `--pretty` - When `--print` is passed, output is printed layer-by-layer.
 
 > ### Example
 > ![screenshot-2023-01-08-18:31:48](https://user-images.githubusercontent.com/107510599/211212842-5e66841c-bbc3-4c8c-bb9f-08961293682f.png)
