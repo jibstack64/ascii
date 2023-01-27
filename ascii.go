@@ -9,6 +9,7 @@ import (
 	"math"
 	"os"
 	"strings"
+	"time"
 
 	colour "github.com/fatih/color"
 	"github.com/nfnt/resize"
@@ -26,6 +27,7 @@ var (
 	scale      float64
 	stretch    int
 	prt        bool
+	pretty     bool
 
 	// w/h values of image
 	width  int
@@ -119,7 +121,14 @@ func main() {
 		successPrinter.Printf("success! written to '%s'.\n", outPath)
 	}
 	if prt {
-		fmt.Print(final)
+		if pretty {
+			for _, s := range strings.Split(final, "\n") {
+				fmt.Println(s)
+				time.Sleep(time.Millisecond * 75)
+			}
+		} else {
+			fmt.Print(final)
+		}
 	}
 }
 
@@ -133,6 +142,7 @@ func init() {
 	flag.Float64Var(&scale, "scale", 0.5, "Specifies a scale factor.")
 	flag.IntVar(&stretch, "stretch", 1, "Specifies a stretch factor.")
 	flag.BoolVar(&prt, "print", false, "If passed, the result will be printed.")
+	flag.BoolVar(&pretty, "pretty", false, "When --print is passed, output is printed layer-by-layer.")
 
 	// parse flags
 	flag.Parse()
