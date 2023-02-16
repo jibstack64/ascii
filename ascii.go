@@ -60,9 +60,9 @@ func luminance(pixel RGBA) uint8 {
 
 // detects the name of a pixel's colour and returns the corresponding ANSI colour string
 func rough(pixel RGBA) string {
-	s := "\033[38;5;%dm"
+	return fmt.Sprintf("\033[38;2;%d;%d;%dm", pixel.R, pixel.G, pixel.B)
 	// correct pixel
-	if pixel.R == pixel.G && pixel.G == pixel.B {
+	/* if pixel.R == pixel.G && pixel.G == pixel.B {
 		if pixel.R < 8 {
 			return fmt.Sprintf(s, 16)
 		}
@@ -71,7 +71,7 @@ func rough(pixel RGBA) string {
 		}
 		return fmt.Sprintf(s, (int)(math.Round((float64)(((int)(pixel.R)-8)/247)*24)+232))
 	}
-	return fmt.Sprintf(s, 16+(int)(36*math.Round((float64)(pixel.R/255*5)))+(int)(6*math.Round((float64)(pixel.G/255*5)))+(int)(math.Round((float64)(pixel.B/255*5))))
+	return fmt.Sprintf(s, 16+(int)(36*math.Round((float64)(pixel.R/255*5)))+(int)(6*math.Round((float64)(pixel.G/255*5)))+(int)(math.Round((float64)(pixel.B/255*5)))) */
 }
 
 func main() {
