@@ -21,5 +21,4 @@ Syntax: `./ascii <--in> photo.png [--out] out.txt [--scale] 0.5 [--stretch] 0.5 
 - `--colour` - Colours the output. Only works on terminals with RGB ANSI colour support.
 
 > ### Example
-> ![screenshot-2023-01-08-18:31:48](https://user-images.githubusercontent.com/107510599/211212842-5e66841c-bbc3-4c8c-bb9f-08961293682f.png)
-
+> ![image](https://user-images.githubusercontent.com/107510599/219502429-7367712e-0502-42ea-8bc3-4dbe1cca4e9b.png)
