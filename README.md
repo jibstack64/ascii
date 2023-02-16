@@ -1,6 +1,6 @@
 # ascii
 
-![GitHub](https://img.shields.io/github/license/jibstack64/ascii) ![GitHub go.mod Go version](https://img.shields.io/github/go-mod/go-version/jibstack64/ascii) ![GitHub release (latest by date)](https://img.shields.io/github/v/release/jibstack64/ascii)
+![GitHub](https://img.shields.io/github/license/jibstack64/ascii) ![GitHub go.mod Go version](https://img.shields.io/github/go-mod/go-version/jibstack64/ascii) ![GitHub release (latest by date)](https://img.shields.io/github/v/release/jibstack64/ascii) ![GitHub all releases](https://img.shields.io/github/downloads/jibstack64/ascii/total)
 
 A standalone executable that converts a standard image into viable ASCII art.
 
