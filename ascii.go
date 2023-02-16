@@ -20,6 +20,15 @@ type RGBA struct {
 	R, G, B, A uint32
 }
 
+func (rgb *RGBA) Subtract(rgb_ RGBA) RGBA {
+	s := func(a uint32, b uint32) uint32 {
+		return (uint32)((int)(a) - (int)(b))
+	}
+	return RGBA{
+		s(rgb.R, rgb_.R), s(rgb.G, rgb_.G), s(rgb.B, rgb_.B), s(rgb.A, rgb_.A),
+	}
+}
+
 var (
 	characters []string
 	inPath     string
@@ -28,6 +37,7 @@ var (
 	stretch    int
 	prt        bool
 	pretty     bool
+	clr        bool
 
 	// w/h values of image
 	width  int
@@ -46,6 +56,22 @@ func luminance(pixel RGBA) uint8 {
 		return 0
 	}
 	return uint8(math.Floor((0.299*float64(pixel.R) + 0.587*float64(pixel.G) + 0.114*float64(pixel.B)) / 256))
+}
+
+// detects the name of a pixel's colour and returns the corresponding ANSI colour string
+func rough(pixel RGBA) string {
+	s := "\033[38;5;%dm"
+	// correct pixel
+	if pixel.R == pixel.G && pixel.G == pixel.B {
+		if pixel.R < 8 {
+			return fmt.Sprintf(s, 16)
+		}
+		if pixel.R > 248 {
+			return fmt.Sprintf(s, 231)
+		}
+		return fmt.Sprintf(s, (int)(math.Round((float64)(((int)(pixel.R)-8)/247)*24)+232))
+	}
+	return fmt.Sprintf(s, 16+(int)(36*math.Round((float64)(pixel.R/255*5)))+(int)(6*math.Round((float64)(pixel.G/255*5)))+(int)(math.Round((float64)(pixel.B/255*5))))
 }
 
 func main() {
@@ -108,7 +134,11 @@ func main() {
 			if pos == 70 {
 				pos -= 1
 			}
-			final += characters[pos]
+			if clr {
+				final += rough(pixel) + characters[pos]
+			} else {
+				final += characters[pos]
+			}
 		}
 		final += "\n"
 	}
@@ -142,7 +172,8 @@ func init() {
 	flag.Float64Var(&scale, "scale", 0.5, "Specifies a scale factor.")
 	flag.IntVar(&stretch, "stretch", 1, "Specifies a stretch factor.")
 	flag.BoolVar(&prt, "print", false, "If passed, the result will be printed.")
-	flag.BoolVar(&pretty, "pretty", false, "When --print is passed, output is printed layer-by-layer.")
+	flag.BoolVar(&pretty, "pretty", false, "When '--print' is passed, output is printed layer-by-layer.")
+	flag.BoolVar(&clr, "colour", false, "Colours the output.")
 
 	// parse flags
 	flag.Parse()
