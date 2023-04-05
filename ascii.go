@@ -144,11 +144,13 @@ func main() {
 	}
 
 	// write final to outfile
-	err = os.WriteFile(outPath, []byte(final), 0644)
-	if err != nil {
-		errorPrinter.Println("error writing to outfile!")
-	} else {
-		successPrinter.Printf("success! written to '%s'.\n", outPath)
+	if outPath != "" {
+		err = os.WriteFile(outPath, []byte(final), 0644)
+		if err != nil {
+			errorPrinter.Println("error writing to outfile!")
+		} else {
+			successPrinter.Printf("success! written to '%s'.\n", outPath)
+		}
 	}
 	if prt {
 		if pretty {
@@ -168,7 +170,7 @@ func init() {
 
 	// parse arguments
 	flag.StringVar(&inPath, "in", "", "Specifies the input .png/jpg/jpeg file.")
-	flag.StringVar(&outPath, "out", "out.txt", "Specifies the output .txt file.")
+	flag.StringVar(&outPath, "out", "", "Specifies the output .txt file.")
 	flag.Float64Var(&scale, "scale", 0.5, "Specifies a scale factor.")
 	flag.IntVar(&stretch, "stretch", 1, "Specifies a stretch factor.")
 	flag.BoolVar(&prt, "print", false, "If passed, the result will be printed.")
