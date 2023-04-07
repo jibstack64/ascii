@@ -13,7 +13,7 @@ Syntax: `./ascii <--in> photo.png [--out] out.txt [--scale] 0.5 [--stretch] 0.5 
 - `--in <image.png>` - Specifies the input image. Can be `png` or  `jpg/jpeg`.
   
 #### Optional:
-- `--out <out.txt>` - Specifies the output file. Defaults to `out.txt`.
+- `--out <out.txt>` - Specifies the output file. If none is provided, this is disabled.
 - `--scale <number>` - Scales the result, making it more viable to be printed in a console. Must be above `0` (e.g. `0.5` would halve the size of the result). Defaults to `0.5`.
 - `--stretch <integer>` - Stretches the result horizontally. This is useful for larger images. Must be above `0`. Defaults to `1`.
 - `--print` - Prints the result to the console once finished.
