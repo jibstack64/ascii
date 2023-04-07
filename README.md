@@ -20,5 +20,10 @@ Syntax: `./ascii <--in> photo.png [--out] out.txt [--scale] 0.5 [--stretch] 0.5 
 - `--pretty` - When `--print` is passed, output is printed layer-by-layer.
 - `--colour` - Colours the output. Only works on terminals with RGB ANSI colour support.
 
+### GIFs
+Download and use the `gif.py` script to generate an ASCII gif! Syntax: `python gif.py <file.gif> <scale> [frames]`.
+
+You can use the `view.py` script to view the generated ASCII gif: `python view.py <directory>`.
+
 > ### Example
 > ![image](https://github.com/jibstack64/ascii/raw/master/examples/smiley.png)
