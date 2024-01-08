@@ -37,7 +37,8 @@ var (
 	stretch    int
 	prt        bool
 	pretty     bool
-	clr        bool
+	closeClr   bool
+    trueClr    bool
 
 	// w/h values of image
 	width  int
@@ -45,9 +46,47 @@ var (
 
 	pixels [][]RGBA
 
+    ansi = map[string][2]interface{}{
+        "Black":        { "\u001b[30m", RGBA{0, 0, 0, 0} },
+        "Red":          { "\u001b[31m", RGBA{255, 0, 0, 0} },
+        "Green":        { "\u001b[32m", RGBA{0, 255, 0, 0} },
+        "Yellow":       { "\u001b[33m", RGBA{255, 255, 0, 0} },
+        "Blue":         { "\u001b[34m", RGBA{0, 0, 255, 0} },
+        "Magenta":      { "\u001b[35m", RGBA{255, 0, 255, 0} },
+        "Cyan":         { "\u001b[36m", RGBA{0, 255, 255, 0} },
+        "White":        { "\u001b[37m", RGBA{255, 255, 255, 0} },
+        "BrightBlack":  { "\u001b[30;1m", RGBA{85, 85, 85, 0} },
+        "BrightRed":    { "\u001b[31;1m", RGBA{255, 85, 85, 0} },
+        "BrightGreen":  { "\u001b[32;1m", RGBA{85, 255, 85, 0} },
+        "BrightYellow": { "\u001b[33;1m", RGBA{255, 255, 85, 0} },
+        "BrightBlue":   { "\u001b[34;1m", RGBA{85, 85, 255, 0} },
+        "BrightMagenta":{ "\u001b[35;1m", RGBA{255, 85, 255, 0} },
+        "BrightCyan":   { "\u001b[36;1m", RGBA{85, 255, 255, 0} },
+        "BrightWhite":  { "\u001b[37;1m", RGBA{255, 255, 255, 0} },
+        "Reset":        { "\u001b[0m", RGBA{0, 0, 0, 0} },
+    }
+
 	successPrinter = colour.New(colour.FgHiGreen)
 	errorPrinter   = colour.New(colour.FgHiRed)
 )
+
+
+func colorDistance(c1, c2 RGBA) float64 {
+    return math.Sqrt(float64((c1.R-c2.R)*(c1.R-c2.R) + (c1.G-c2.G)*(c1.G-c2.G) + (c1.B-c2.B)*(c1.B-c2.B)))
+}
+
+func round(color RGBA) string {
+    var minf = math.MaxFloat64
+    var closest = ""
+    for name, c := range ansi {
+        distance := colorDistance(color, c[1].(RGBA))
+        if distance < minf {
+            minf = distance
+            closest = name
+        }
+    }
+    return ansi[closest][0].(string)
+}
 
 // calculates a pixel's luminance from its RGB values
 func luminance(pixel RGBA) uint8 {
@@ -61,17 +100,6 @@ func luminance(pixel RGBA) uint8 {
 // detects the name of a pixel's colour and returns the corresponding ANSI colour string
 func rough(pixel RGBA) string {
 	return fmt.Sprintf("\033[38;2;%d;%d;%dm", pixel.R, pixel.G, pixel.B)
-	// correct pixel
-	/* if pixel.R == pixel.G && pixel.G == pixel.B {
-		if pixel.R < 8 {
-			return fmt.Sprintf(s, 16)
-		}
-		if pixel.R > 248 {
-			return fmt.Sprintf(s, 231)
-		}
-		return fmt.Sprintf(s, (int)(math.Round((float64)(((int)(pixel.R)-8)/247)*24)+232))
-	}
-	return fmt.Sprintf(s, 16+(int)(36*math.Round((float64)(pixel.R/255*5)))+(int)(6*math.Round((float64)(pixel.G/255*5)))+(int)(math.Round((float64)(pixel.B/255*5)))) */
 }
 
 func main() {
@@ -134,9 +162,11 @@ func main() {
 			if pos == 70 {
 				pos -= 1
 			}
-			if clr {
-				final += rough(pixel) + characters[pos]
-			} else {
+			if trueClr {
+				final += rough(pixel) + characters[pos] + ansi["Reset"][0].(string)
+            } else if closeClr {
+                final += round(pixel) + characters[pos] + ansi["Reset"][0].(string)
+            } else {
 				final += characters[pos]
 			}
 		}
@@ -175,7 +205,8 @@ func init() {
 	flag.IntVar(&stretch, "stretch", 1, "Specifies a stretch factor.")
 	flag.BoolVar(&prt, "print", false, "If passed, the result will be printed.")
 	flag.BoolVar(&pretty, "pretty", false, "When '--print' is passed, output is printed layer-by-layer.")
-	flag.BoolVar(&clr, "colour", false, "Colours the output.")
+	flag.BoolVar(&closeClr, "close-colour", false, "Colours the output by rounding RGB values to the closest available ANSI codes.")
+    flag.BoolVar(&trueClr, "true-colour", false, "Colours the output using exact RGB-ANSI codes. Not supported on most consoles.") 
 
 	// parse flags
 	flag.Parse()
