@@ -19,7 +19,7 @@ with Image.open(FILE_NAME) as im:
 
 r = []
 for i in range(KEY_FRAMES):
-    r.append(subprocess.run(["./ascii", "--in", f"{DIR_NAME}/{i}-temp.png", "--scale", str(SCALE), "--print", "--colour"], stdout=subprocess.PIPE).stdout.decode('utf-8'))
+    r.append(subprocess.run(["./ascii", "--in", f"{DIR_NAME}/{i}-temp.png", "--scale", str(SCALE), "--print", "--close-colour"], stdout=subprocess.PIPE).stdout.decode('utf-8'))
 while True:
     for x in r:
         os.system("cls" if os.name == "nt" else "clear")
