@@ -4,7 +4,7 @@
 
 A standalone executable that converts a standard image into viable ASCII art.
 
-Syntax: `./ascii <--in> photo.png [--out] out.txt [--scale] 0.5 [--stretch] 0.5 [--print]`
+Syntax: `./ascii <--in> photo.png [--out] out.txt [--scale] 0.5 [--stretch] 0.5 [--print] [--close-colour] [--true-colour]`
 > Often, you may require a very low scale factor (>0.1), particularly for larger images.
 
 ### Arguments
