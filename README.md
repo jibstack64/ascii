@@ -18,7 +18,8 @@ Syntax: `./ascii <--in> photo.png [--out] out.txt [--scale] 0.5 [--stretch] 0.5 
 - `--stretch <integer>` - Stretches the result horizontally. This is useful for larger images. Must be above `0`. Defaults to `1`.
 - `--print` - Prints the result to the console once finished.
 - `--pretty` - When `--print` is passed, output is printed layer-by-layer.
-- `--colour` - Colours the output. Only works on terminals with RGB ANSI colour support.
+- `--close-colour` - Colours the output by rounding RGB values to the closest available ANSI codes.
+- `--true-colour` - Colours the output using exact RGB-ANSI codes. Not supported on most consoles. 
 
 ### GIFs
 Download and use the `gif.py` script to generate an ASCII gif! Syntax: `python gif.py <file.gif> <scale> [frames]`.
